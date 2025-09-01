@@ -48,10 +48,10 @@ This method packages your application into a container, which is ideal for deplo
     docker build -t fc-weather-app .
     ```
 
-3.  Run the container, mapping the internal port 8080 to an external port (e.g., 8080) on your machine. Pass the API key as an environment variable to the container.
+3.  Run the container on your machine. Pass the API key and port as an environment variable to the container.
 
     ```sh
-    docker run -p 8080:8080 --env-file .env fc-weather-app
+    docker compose up --build
     ```
 
 -----

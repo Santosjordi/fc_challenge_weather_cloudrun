@@ -6,7 +6,9 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
+	"strings"
 
 	"github.com/santosjordi/fc_challenge_weather_cloudrun/config"
 )
@@ -121,7 +123,7 @@ func (a *app) handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// 1. Load the configuration file at startup
-	cfg, err := config.LoadConfig(".env") // or pass it as an argument
+	cfg, err := config.LoadConfig() // or pass it as an argument
 	if err != nil {
 		panic(fmt.Errorf("failed to load config: %w", err))
 	}
@@ -136,7 +138,15 @@ func main() {
 		http.NotFound(w, r)
 	})
 
-	port := cfg.ServerPort // Get port from the config
+	// Cloud Run provides the PORT env variable
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = cfg.ServerPort // fallback to .env config
+	}
+
+	if !strings.HasPrefix(port, ":") {
+		port = ":" + port
+	}
 	fmt.Printf("Server is running on port %s\n", port)
 	http.ListenAndServe(port, nil)
 }
