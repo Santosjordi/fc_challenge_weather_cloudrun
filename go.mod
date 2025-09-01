@@ -1,6 +1,6 @@
 module github.com/santosjordi/fc_challenge_weather_cloudrun
 
-go 1.23.2
+go 1.22.12
 
 require github.com/spf13/viper v1.20.1
 
