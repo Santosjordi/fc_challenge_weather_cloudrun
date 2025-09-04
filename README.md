@@ -1,5 +1,11 @@
 # FC Weather App
 
+## Cloud Run
+Deployed Version is available on:
+
+[Fullcycle-Weather-App](https://fc-challenge-weather-cloudrun-279734758233.us-central1.run.app/)
+
+
 ## How to Run it
 
 To run your Go weather application, you'll need to set up the environment, configure API keys, and either run the Go binary directly or use Docker. This guide covers both methods.

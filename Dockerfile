@@ -1,5 +1,5 @@
 # Use a lightweight Go image as the build stage
-FROM golang:1.22-alpine AS builder
+FROM golang:latest AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 
 # Download the dependencies
-RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod download
 
 # Copy the rest of the application source code
 COPY . .
@@ -16,7 +16,7 @@ COPY . .
 # Build the Go application, making it a static binary
 # -o fc-weather-app specifies the output binary name
 # ./cmd/main.go points to the main entry file
-RUN go build -o fc-weather-app ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o fc-weather-app ./cmd/main.go
 
 # ---
 # Use a minimal base image for the final, smaller production image
